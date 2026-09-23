@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de Levantamiento de Procesos, Puestos y Tareas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">FL</span>
+      <div class="brand-text">
+        <strong>Ficha de Levantamiento</strong>
+        <span>Procesos, Puestos y Tareas</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="save-indicator" id="saveIndicator">Borrador guardado automáticamente</span>
+      <button type="button" class="btn btn-ghost" id="btnLimpiar">Limpiar</button>
+      <button type="button" class="btn btn-primary" id="btnPdf">Generar PDF</button>
+    </div>
+  </div>
+</header>
+
+<main id="printArea">
+
+  <section class="doc-header">
+    <h1>Ficha de Levantamiento de Procesos, Puestos y Tareas</h1>
+    <p class="instructions">
+      <strong>Instrucciones:</strong> Aplicar preferentemente por cargo. Entrevistar a personas que ejecuten
+      habitualmente las tareas y registrar actividades rutinarias y no rutinarias. Marcar las casillas y
+      complementar con observaciones.
+    </p>
+  </section>
+
+  <form id="ficha">
+
+    <!-- 1. DATOS GENERALES -->
+    <section class="card">
+      <h2><span class="num">1</span>Datos generales del levantamiento</h2>
+      <div class="grid grid-2">
+        <label>Empresa
+          <input type="text" data-field="empresa" value="Callegari">
+        </label>
+        <label>Sucursal
+          <input type="text" data-field="sucursal">
+        </label>
+        <label>Área / Departamento
+          <input type="text" data-field="area">
+        </label>
+        <label>Fecha
+          <input type="date" data-field="fecha">
+        </label>
+        <label>Cargo evaluado
+          <input type="text" data-field="cargoEvaluado">
+        </label>
+        <label>Responsable del área / jefatura
+          <input type="text" data-field="responsableArea">
+        </label>
+        <label>Persona entrevistada
+          <input type="text" data-field="personaEntrevistada">
+        </label>
+        <label>Horario
+          <input type="text" data-field="horario">
+        </label>
+        <label>Realizado por
+          <input type="text" data-field="realizadoPor" value="Claudia Aparicio Guerra">
+        </label>
+        <label>Cargo de quien realiza
+          <input type="text" data-field="realizadoPorCargo" value="Prevencionista de Riesgos">
+        </label>
+      </div>
+    </section>
+
+    <!-- 2. IDENTIFICACIÓN DEL PROCESO -->
+    <section class="card">
+      <h2><span class="num">2</span>Identificación del proceso, subproceso y tareas</h2>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">1</span>
+          <div>
+            <p class="qtitle">Función del cargo</p>
+            <p class="qtext">¿Cuál es el objetivo principal de su trabajo? Indique para qué existe el cargo y qué resultado debe lograr.</p>
+            <p class="qex">Ej.: Técnico mecánico: diagnosticar y reparar vehículos. Vendedor: asesorar clientes y gestionar ventas. Bodeguero: recibir, almacenar y entregar repuestos.</p>
+          </div>
+        </div>
+        <label class="a">Objetivo / resultado principal
+          <textarea data-field="funcionCargo" rows="3"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">2</span>
+          <div>
+            <p class="qtitle">Proceso principal</p>
+            <p class="qtext">¿Dentro de qué proceso general de la sucursal se realizan sus funciones?</p>
+            <p class="qex">Ej.: venta de vehículos; servicio técnico/postventa; desabolladura y pintura (DyP); repuestos y bodega; lavado/preparación de vehículos; administración; traslado de vehículos.</p>
+          </div>
+        </div>
+        <label class="a">Nombre del proceso principal
+          <textarea data-field="procesoPrincipal" rows="2"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">3</span>
+          <div>
+            <p class="qtitle">Subproceso o etapa</p>
+            <p class="qtext">Dentro del proceso anterior, ¿en qué etapa o etapas participa desde que recibe el trabajo hasta que lo entrega?</p>
+            <p class="qex">Ej.: Servicio técnico: recepción → diagnóstico → reparación → prueba → entrega. Bodega: recepción → almacenamiento → preparación/entrega → inventario.</p>
+          </div>
+        </div>
+        <label class="a">Subproceso(s) / etapa(s)
+          <textarea data-field="subproceso" rows="2"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">4</span>
+          <div>
+            <p class="qtitle">Lugar de ejecución</p>
+            <p class="qtext">¿En qué sector realiza cada tarea? Indique también si se desplaza entre distintas áreas o fuera de la sucursal.</p>
+            <p class="qex">Ej.: taller, elevador, patio, bodega, sala de ventas, recepción, lavado, estacionamientos, oficina, calle o ruta.</p>
+          </div>
+        </div>
+        <label class="a">Sector(es) donde trabaja
+          <textarea data-field="lugarEjecucion" rows="2"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">5</span>
+          <div>
+            <p class="qtitle">Tareas rutinarias</p>
+            <p class="qtext">Describa paso a paso lo que hace normalmente. Para cada tarea indique qué hace, cómo lo hace, con qué equipo o herramienta y dónde.</p>
+            <p class="qex">Ej.: recibir orden de trabajo → mover vehículo → elevarlo → desmontar componente → reparar/cambiar → probar → entregar.</p>
+          </div>
+        </div>
+        <label class="a">Secuencia de tareas habituales
+          <textarea data-field="tareasRutinarias" rows="4"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q">
+          <span class="qnum">6</span>
+          <div>
+            <p class="qtitle">Tareas no rutinarias</p>
+            <p class="qtext">¿Qué actividades realiza solo ocasionalmente, por contingencia o apoyo, aunque no formen parte de su rutina diaria?</p>
+            <p class="qex">Ej.: inventario, descarga o recepción de camión, limpieza profunda, traslado entre sucursales, apoyo a otro cargo, emergencias o mantención menor.</p>
+          </div>
+        </div>
+        <div class="a">
+          <div class="radio-row" data-group="tareasNoRutinariasSiNo">
+            <label class="radio"><input type="radio" name="tareasNoRutinariasSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="tareasNoRutinariasSiNo" value="No"> No</label>
+          </div>
+          <label>¿Cuáles?
+            <textarea data-field="tareasNoRutinarias" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. RECURSOS -->
+    <section class="card">
+      <h2><span class="num">3</span>Recursos, entradas, salidas y documentos</h2>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">7</span><p class="qtext">¿Qué herramientas, equipos, máquinas o vehículos utiliza para realizar sus tareas?</p></div>
+        <div class="a">
+          <label class="check"><input type="checkbox" data-field="herramientasNoAplica"> No aplica</label>
+          <label>Detalle
+            <textarea data-field="herramientasDetalle" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">8</span><p class="qtext">¿Utiliza productos químicos, aceites, pinturas, solventes, combustibles u otras sustancias?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="quimicosSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="quimicosSiNo" value="No"> No</label>
+          </div>
+          <label>¿Cuáles?
+            <textarea data-field="quimicosCuales" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">9</span><p class="qtext">¿Qué materiales, repuestos, información, documentos o solicitudes recibe para iniciar su trabajo?</p></div>
+        <label class="a">Entradas del proceso
+          <textarea data-field="materialesRecibidos" rows="2"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">10</span><p class="qtext">¿Qué producto, servicio, reparación, documento o resultado obtiene al terminar?</p></div>
+        <label class="a">Salida / resultado
+          <textarea data-field="productoObtenido" rows="2"></textarea>
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">11</span><p class="qtext">¿Existen procedimientos, instructivos, manuales o documentos para realizar estas tareas?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="procedimientosSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="procedimientosSiNo" value="No"> No</label>
+            <label class="radio"><input type="radio" name="procedimientosSiNo" value="No sabe"> No sabe</label>
+          </div>
+          <label>¿Cuáles?
+            <textarea data-field="procedimientosCuales" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PERSONAS -->
+    <section class="card">
+      <h2><span class="num">4</span>Personas que realizan las tareas</h2>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">12</span><p class="qtext">¿Cuántas personas realizan habitualmente este mismo trabajo?</p></div>
+        <label class="a a-inline">Total
+          <input type="number" min="0" data-field="totalPersonas" class="input-narrow">
+        </label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">13</span><p class="qtext">Distribución de las personas que realizan estas tareas</p></div>
+        <div class="a grid grid-3">
+          <label>Hombres <input type="number" min="0" data-field="hombres" class="input-narrow"></label>
+          <label>Mujeres <input type="number" min="0" data-field="mujeres" class="input-narrow"></label>
+          <label>Otra identidad / prefiere no indicar <input type="number" min="0" data-field="otraIdentidad" class="input-narrow"></label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">14</span><p class="qtext">¿Existen personas especialmente sensibles frente a algún riesgo del puesto?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="sensiblesSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="sensiblesSiNo" value="No"> No</label>
+            <label class="radio"><input type="radio" name="sensiblesSiNo" value="No sabe"> No sabe</label>
+          </div>
+          <label>Observación
+            <textarea data-field="sensiblesObs" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">15</span><p class="qtext">¿Existen personas con discapacidad que realicen estas tareas?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="discapacidadSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="discapacidadSiNo" value="No"> No</label>
+            <label class="radio"><input type="radio" name="discapacidadSiNo" value="No sabe"> No sabe</label>
+          </div>
+          <label>Observación
+            <textarea data-field="discapacidadObs" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">16</span><p class="qtext">¿Qué horario, jornada o sistema de turnos tienen?</p></div>
+        <label class="a">
+          <textarea data-field="horarioTurnos" rows="2"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <!-- 5. PELIGROS -->
+    <section class="card">
+      <h2><span class="num">5</span>Peligros, incidentes y experiencia del trabajador</h2>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">17</span><p class="qtext">¿Qué tareas considera más peligrosas o con mayor posibilidad de provocar un accidente?</p></div>
+        <label class="a"><textarea data-field="tareasPeligrosas" rows="2"></textarea></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">18</span><p class="qtext">¿Ha ocurrido algún accidente, incidente o casi accidente realizando estas tareas?</p></div>
+        <div class="a radio-row">
+          <label class="radio"><input type="radio" name="accidenteSiNo" value="Sí"> Sí</label>
+          <label class="radio"><input type="radio" name="accidenteSiNo" value="No"> No</label>
+          <label class="radio"><input type="radio" name="accidenteSiNo" value="No sabe"> No sabe</label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">19</span><p class="qtext">Si ocurrió alguno, ¿qué pasó? Describa brevemente el hecho.</p></div>
+        <label class="a"><textarea data-field="queOcurrio" rows="2"></textarea></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">20</span><p class="qtext">¿Cuántas personas fueron afectadas?</p></div>
+        <label class="a a-inline">N° <input type="number" min="0" data-field="personasAfectadas" class="input-narrow"></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">21</span><p class="qtext">¿Qué tipo de lesión, daño o consecuencia se produjo?</p></div>
+        <label class="a"><textarea data-field="tipoLesion" rows="2"></textarea></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">22</span><p class="qtext">¿Recuerda si este tipo de evento ha ocurrido más de una vez?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="eventoRepetidoSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="eventoRepetidoSiNo" value="No"> No</label>
+            <label class="radio"><input type="radio" name="eventoRepetidoSiNo" value="No sabe"> No sabe</label>
+          </div>
+          <label>Frecuencia aproximada
+            <input type="text" data-field="frecuenciaAprox">
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. MEDIDAS DE CONTROL -->
+    <section class="card">
+      <h2><span class="num">6</span>Medidas de control y elementos de protección</h2>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">23</span><p class="qtext">¿Qué medidas se utilizan actualmente para evitar accidentes o enfermedades laborales?</p></div>
+        <label class="a"><textarea data-field="medidasActuales" rows="2"></textarea></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">24</span><p class="qtext">¿Qué elementos de protección personal (EPP) utiliza para realizar estas tareas?</p></div>
+        <label class="a"><textarea data-field="eppUtilizado" rows="2"></textarea></label>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">25</span><p class="qtext">¿Hay alguna tarea en la que considere que falta una medida de seguridad, protección o capacitación?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="faltaMedidaSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="faltaMedidaSiNo" value="No"> No</label>
+          </div>
+          <label>¿Cuál?
+            <textarea data-field="faltaMedidaCual" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">26</span><p class="qtext">¿Existe alguna condición del lugar, equipo o forma de trabajo que debería mejorarse?</p></div>
+        <div class="a">
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="condicionMejorarSiNo" value="Sí"> Sí</label>
+            <label class="radio"><input type="radio" name="condicionMejorarSiNo" value="No"> No</label>
+          </div>
+          <label>¿Cuál?
+            <textarea data-field="condicionMejorarCual" rows="2"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="qa">
+        <div class="q"><span class="qnum">27</span><p class="qtext">¿Hay algo de este trabajo que no se haya preguntado y que considere importante mencionar?</p></div>
+        <label class="a"><textarea data-field="comentarioAdicional" rows="2"></textarea></label>
+      </div>
+    </section>
+
+    <!-- REGISTRO RESUMIDO DE TAREAS -->
+    <section class="card">
+      <h2>Registro resumido de tareas del cargo</h2>
+      <p class="hint">Use una fila por tarea. Marque si es rutinaria o no rutinaria e indique el lugar, recursos utilizados, peligros observados y controles existentes.</p>
+      <div class="table-wrap">
+        <table id="tablaResumen">
+          <thead>
+            <tr>
+              <th class="col-n">N°</th>
+              <th>Tarea / actividad</th>
+              <th class="col-chk">Rutinaria</th>
+              <th class="col-chk">No rutinaria</th>
+              <th>Lugar</th>
+              <th>Herramientas / equipos / sustancias</th>
+              <th>Peligro o situación relevante</th>
+              <th>Control existente</th>
+              <th class="col-del no-print"></th>
+            </tr>
+          </thead>
+          <tbody id="tablaResumenBody"></tbody>
+        </table>
+      </div>
+      <button type="button" class="btn btn-ghost no-print" id="btnAddRow">+ Agregar fila</button>
+    </section>
+
+    <!-- NOTAS -->
+    <section class="card">
+      <h2>Notas del levantamiento</h2>
+      <textarea data-field="notasLevantamiento" rows="4"></textarea>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section class="card">
+      <h2>Check list de cierre del levantamiento</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Verificación</th>
+              <th class="col-chk">Sí</th>
+              <th class="col-chk">No</th>
+              <th class="col-chk">N.A.</th>
+            </tr>
+          </thead>
+          <tbody id="checklistBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<footer class="page-footer no-print">
+  Los datos se guardan solo en este navegador (almacenamiento local). Nada se envía a ningún servidor.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
