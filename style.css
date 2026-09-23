@@ -34,14 +34,12 @@ h1,h2{font-weight:700;letter-spacing:-0.01em;}
   padding:12px 20px;
   gap:16px;
 }
-.brand{display:flex;align-items:center;gap:10px;}
-.brand-mark{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:34px;height:34px;border-radius:8px;
-  background:var(--accent);color:#fff;font-weight:700;font-size:13px;
-  flex:none;
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{
+  height:28px;width:auto;flex:none;
+  filter:drop-shadow(0 0 1px rgba(0,0,0,.25));
 }
-.brand-text{display:flex;flex-direction:column;line-height:1.2;color:#fff;}
+.brand-text{display:flex;flex-direction:column;line-height:1.2;color:#fff;padding-left:12px;border-left:1px solid #3a4453;}
 .brand-text strong{font-size:14.5px;}
 .brand-text span{font-size:12px;color:#aab3c0;}
 
@@ -61,6 +59,7 @@ h1,h2{font-weight:700;letter-spacing:-0.01em;}
 main{max-width:900px;margin:0 auto;padding:28px 20px 60px;}
 
 .doc-header{text-align:left;margin-bottom:22px;}
+.doc-logo{height:46px;width:auto;display:block;margin-bottom:14px;}
 .doc-header h1{font-size:24px;margin:0 0 10px;}
 .instructions{
   background:var(--accent-soft);
