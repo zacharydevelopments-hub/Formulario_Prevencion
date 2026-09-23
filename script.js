@@ -19,6 +19,58 @@
   var RESUMEN_COLS = ["tarea", "lugar", "herramientas", "peligro", "control"];
   var resumenRowCount = 0;
 
+  var DEFAULT_EMPRESA = "Callegari e Hijos";
+  var SUCURSALES = window.SUCURSALES_POR_EMPRESA || {};
+  var empresaSelect = document.getElementById("empresaSelect");
+  var sucursalSelect = document.getElementById("sucursalSelect");
+
+  // ---------- empresa / sucursal dependientes ----------
+  function populateEmpresaSelect() {
+    Object.keys(SUCURSALES).sort().forEach(function (empresa) {
+      var opt = document.createElement("option");
+      opt.value = empresa;
+      opt.textContent = empresa;
+      empresaSelect.appendChild(opt);
+    });
+    if (SUCURSALES[DEFAULT_EMPRESA]) empresaSelect.value = DEFAULT_EMPRESA;
+  }
+
+  function populateSucursalSelect(empresa, selectedValue) {
+    var lista = SUCURSALES[empresa];
+    sucursalSelect.innerHTML = "";
+
+    if (!empresa || !lista) {
+      sucursalSelect.disabled = true;
+      var placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Seleccione primero la empresa";
+      sucursalSelect.appendChild(placeholder);
+      return;
+    }
+
+    sucursalSelect.disabled = false;
+    var empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "Seleccione una sucursal";
+    sucursalSelect.appendChild(empty);
+
+    lista.forEach(function (sucursal) {
+      var opt = document.createElement("option");
+      opt.value = sucursal;
+      opt.textContent = sucursal;
+      sucursalSelect.appendChild(opt);
+    });
+
+    if (selectedValue && lista.indexOf(selectedValue) !== -1) {
+      sucursalSelect.value = selectedValue;
+    }
+  }
+
+  empresaSelect.addEventListener("change", function () {
+    populateSucursalSelect(empresaSelect.value, "");
+    scheduleSave();
+  });
+
   // ---------- registro resumido de tareas ----------
   function addResumenRow(data) {
     data = data || {};
@@ -131,9 +183,17 @@
     if (!state) return;
 
     Object.keys(state.fields || {}).forEach(function (key) {
+      if (key === "empresa" || key === "sucursal") return; // manejados aparte, ver abajo
       var el = form.querySelector('[data-field="' + key + '"]');
       if (el) el.value = state.fields[key];
     });
+
+    var savedEmpresa = (state.fields || {}).empresa || "";
+    var savedSucursal = (state.fields || {}).sucursal || "";
+    if (savedEmpresa && SUCURSALES[savedEmpresa]) {
+      empresaSelect.value = savedEmpresa;
+    }
+    populateSucursalSelect(empresaSelect.value, savedSucursal);
 
     Object.keys(state.checks || {}).forEach(function (key) {
       var el = form.querySelector('[data-field="' + key + '"]');
@@ -188,6 +248,8 @@
   }
 
   // ---------- inicialización ----------
+  populateEmpresaSelect();
+  populateSucursalSelect(empresaSelect.value, "");
   buildChecklist(null);
   for (var i = 0; i < 9; i++) addResumenRow();
 
@@ -222,7 +284,8 @@
     tablaBody.innerHTML = "";
     resumenRowCount = 0;
     for (var i = 0; i < 9; i++) addResumenRow();
-    document.querySelector('[data-field="empresa"]').value = "Callegari";
+    empresaSelect.value = SUCURSALES[DEFAULT_EMPRESA] ? DEFAULT_EMPRESA : "";
+    populateSucursalSelect(empresaSelect.value, "");
     document.querySelector('[data-field="realizadoPor"]').value = "Claudia Aparicio Guerra";
     document.querySelector('[data-field="realizadoPorCargo"]').value = "Prevencionista de Riesgos";
     if (saveIndicator) saveIndicator.textContent = "Formulario vacío";

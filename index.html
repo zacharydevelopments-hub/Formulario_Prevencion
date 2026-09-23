@@ -43,10 +43,14 @@
       <h2><span class="num">1</span>Datos generales del levantamiento</h2>
       <div class="grid grid-2">
         <label>Empresa
-          <input type="text" data-field="empresa" value="Callegari">
+          <select data-field="empresa" id="empresaSelect">
+            <option value="">Seleccione una empresa</option>
+          </select>
         </label>
         <label>Sucursal
-          <input type="text" data-field="sucursal">
+          <select data-field="sucursal" id="sucursalSelect" disabled>
+            <option value="">Seleccione primero la empresa</option>
+          </select>
         </label>
         <label>Área / Departamento
           <input type="text" data-field="area">
@@ -433,6 +437,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+<script src="sucursales.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

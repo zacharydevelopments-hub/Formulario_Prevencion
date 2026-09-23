@@ -110,12 +110,14 @@ main{max-width:900px;margin:0 auto;padding:28px 20px 60px;}
 
 /* form controls */
 label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--ink-soft);}
-input[type=text],input[type=date],input[type=number],textarea{
+input[type=text],input[type=date],input[type=number],textarea,select{
   font:inherit;font-size:14px;color:var(--ink);font-weight:400;
   border:1px solid var(--line);border-radius:7px;
   padding:9px 11px;background:#fff;width:100%;resize:vertical;
 }
-input:focus,textarea:focus{outline:2px solid var(--focus);outline-offset:1px;}
+select{appearance:auto;}
+select:disabled{background:var(--paper);color:#9aa4b2;cursor:not-allowed;}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--focus);outline-offset:1px;}
 .input-narrow{max-width:110px;}
 
 .grid{display:grid;gap:14px 18px;}
